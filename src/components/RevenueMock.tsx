@@ -1,7 +1,7 @@
 /** Revenue widget styled like the Figma “Revenue Growth” card preview. */
 export function RevenueMock() {
   return (
-    <div className="flex h-full w-full flex-col rounded-2xl bg-white p-3 shadow-[0_24px_48px_-12px_rgba(16,24,40,0.18)] sm:p-3.5">
+    <div className="flex h-full w-full flex-col rounded-t-2xl bg-white p-3 shadow-[0_24px_48px_-12px_rgba(16,24,40,0.18)] sm:p-3.5">
       <div className="flex items-center justify-between text-xs font-medium text-[#344054]">
         <span>Revenue</span>
         <span>Last 6 Months</span>
