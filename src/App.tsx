@@ -13,7 +13,7 @@ export default function App() {
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
         <PageHeader />
-        <main className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+        <main className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-4 py-6 [-ms-overflow-style:none] [scrollbar-width:none] sm:px-6 sm:py-8 lg:px-8 [&::-webkit-scrollbar]:hidden">
           <div className="mx-auto flex max-w-[1112px] flex-col">
             <div className="flex justify-center pb-2 pt-2">
               <ProductTabs />

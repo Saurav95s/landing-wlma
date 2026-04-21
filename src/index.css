@@ -103,3 +103,100 @@ body {
     will-change: auto;
   }
 }
+
+/* Hero phones: start stacked at center, then ease into final fan layout (cqw/cqh = cluster box). */
+.hero-phone-cluster {
+  container-type: size;
+  container-name: hero-phone-cluster;
+}
+
+@keyframes hero-phone-spread-center {
+  0%,
+  14% {
+    transform: translate3d(0, 0, 0) scale(0.88);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes hero-phone-spread-left {
+  0%,
+  14% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.94);
+  }
+  100% {
+    transform: translate3d(
+        calc(-0.52 * 100cqw + min(23vw, 126px)),
+        calc(0.09 * 100cqh),
+        0
+      )
+      rotate(-5.36deg)
+      scale(1);
+  }
+}
+
+@keyframes hero-phone-spread-right {
+  0%,
+  14% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.94);
+  }
+  100% {
+    transform: translate3d(
+        calc(0.52 * 100cqw - min(23vw, 126px)),
+        calc(0.07 * 100cqh),
+        0
+      )
+      rotate(5.69deg)
+      scale(1);
+  }
+}
+
+.hero-phone-spread {
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.hero-phone-spread--center {
+  animation: hero-phone-spread-center 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-phone-spread--left {
+  animation: hero-phone-spread-left 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-phone-spread--right {
+  animation: hero-phone-spread-right 1.15s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-phone-spread,
+  .hero-phone-spread--center,
+  .hero-phone-spread--left,
+  .hero-phone-spread--right {
+    animation: none;
+    will-change: auto;
+  }
+
+  .hero-phone-spread--center {
+    transform: none;
+  }
+
+  .hero-phone-spread--left {
+    transform: translate3d(
+        calc(-0.52 * 100cqw + min(23vw, 126px)),
+        calc(0.09 * 100cqh),
+        0
+      )
+      rotate(-5.36deg);
+  }
+
+  .hero-phone-spread--right {
+    transform: translate3d(
+        calc(0.52 * 100cqw - min(23vw, 126px)),
+        calc(0.07 * 100cqh),
+        0
+      )
+      rotate(5.69deg);
+  }
+}

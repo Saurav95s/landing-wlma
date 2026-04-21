@@ -181,21 +181,35 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Phone cluster — layer order matches Figma (70:1955): back center, left tilt, right tilt */}
+      {/* Phone cluster — shared center stack on load, then spread + tilt (see index.css). */}
       <div className="relative mx-auto mt-12 w-full max-w-[900px] px-2 sm:mt-16">
-        <div className="relative mx-auto h-[min(72vw,400px)] max-w-[800px] sm:h-[420px] lg:h-[460px]">
+        <div className="hero-phone-cluster relative mx-auto h-[min(72vw,400px)] max-w-[800px] overflow-visible sm:h-[420px] lg:h-[460px]">
           <div className="absolute left-1/2 top-0 z-[1] w-[min(46vw,252px)] max-w-[252px] -translate-x-1/2">
-            <PhoneShell className="aspect-[252/546]">
-              <img
-                src={hero.homepage1}
-                alt="App home"
-                className="h-full w-full object-cover"
-              />
-            </PhoneShell>
+            <div className="hero-phone-spread hero-phone-spread--center">
+              <PhoneShell className="aspect-[252/546]">
+                <img
+                  src={hero.homepage1}
+                  alt="App home"
+                  className="h-full w-full object-cover"
+                />
+              </PhoneShell>
+            </div>
           </div>
 
-          <div className="absolute left-[-2%] top-[10%] z-[3] w-[min(46vw,252px)] max-w-[252px] sm:left-[0%] sm:top-[8%]">
-            <div className="origin-center -rotate-[5.36deg]">
+          <div className="absolute left-1/2 top-0 z-[2] w-[min(46vw,252px)] max-w-[252px] -translate-x-1/2">
+            <div className="hero-phone-spread hero-phone-spread--right">
+              <PhoneShell className="aspect-[252/546]">
+                <img
+                  src={hero.homepage2}
+                  alt="App dashboard"
+                  className="h-full w-full object-cover"
+                />
+              </PhoneShell>
+            </div>
+          </div>
+
+          <div className="absolute left-1/2 top-0 z-[3] w-[min(46vw,252px)] max-w-[252px] -translate-x-1/2">
+            <div className="hero-phone-spread hero-phone-spread--left">
               <PhoneShell className="aspect-[252/546]">
                 <div className="relative flex h-full w-full flex-col items-center bg-[#fcddf8] pt-[28%]">
                   <div className="relative w-[52%] max-w-[145px] aspect-square">
@@ -211,18 +225,6 @@ export function HeroSection() {
                     Spa & Hotels
                   </p>
                 </div>
-              </PhoneShell>
-            </div>
-          </div>
-
-          <div className="absolute right-[-2%] top-[8%] z-[2] w-[min(46vw,252px)] max-w-[252px] sm:right-[0%] sm:top-[6%]">
-            <div className="origin-center rotate-[5.69deg]">
-              <PhoneShell className="aspect-[252/546]">
-                <img
-                  src={hero.homepage2}
-                  alt="App dashboard"
-                  className="h-full w-full object-cover"
-                />
               </PhoneShell>
             </div>
           </div>

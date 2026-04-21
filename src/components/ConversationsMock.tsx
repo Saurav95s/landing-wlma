@@ -25,7 +25,7 @@ export function ConversationsMock() {
         <Pill>Unread (980)</Pill>
         <Pill>Starred</Pill>
       </div>
-      <div className="flex flex-1 flex-col gap-0 overflow-y-auto px-3 pb-3">
+      <div className="flex flex-1 flex-col gap-0 overflow-y-auto px-3 pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <ThreadRow
           name="Koray Okumus"
           preview="Hi Olivia how are you?"
