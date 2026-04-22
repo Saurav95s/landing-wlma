@@ -53,7 +53,7 @@ function HeroRotatingPhrase() {
   )
 
   const phraseStyle =
-    'bg-gradient-to-r from-[#7c3aed] to-[#ed60d8] bg-clip-text font-[family-name:var(--font-display-serif)] text-5xl italic text-transparent sm:text-7xl lg:text-[96px]'
+    'bg-gradient-to-r from-[#7c3aed] to-[#ed60d8] bg-clip-text font-[family-name:var(--font-display-serif)] text-5xl font-semibold italic text-transparent sm:text-7xl lg:text-[96px]'
 
   return (
     <span className="relative inline-block align-baseline">
@@ -154,9 +154,9 @@ export function HeroSection() {
             type="button"
             className="inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#10172a] pl-6 pr-2 text-base font-semibold text-white"
           >
-            Activate
+            Plans starting from
             <span className="flex h-9 items-center rounded-full bg-[#ff8d26] px-3.5 text-base font-bold">
-              $497/mo
+              $99/mo
             </span>
             <span className="flex size-9 items-center justify-center rounded-full bg-white text-base font-bold text-[#10172a]">
               ↗
@@ -206,6 +206,7 @@ export function HeroSection() {
           anchorClassName="absolute right-[-1%] top-[8%] z-[30] hidden w-[180px] lg:right-[3%] lg:top-[12%] lg:flex"
         >
           <StatCard
+            className="absolute top-[5px]"
             iconBg="bg-[#d1fadf]"
             iconSrc={hero.iconDownload}
             title="12.4k"
