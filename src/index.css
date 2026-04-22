@@ -96,8 +96,87 @@ body {
   animation-delay: -3.75s;
 }
 
+/* Hero stat cards: cluster → final ring around phones (cqw/cqh = .hero-composition frame). */
+.hero-composition {
+  container-type: size;
+  container-name: hero-composition;
+}
+
+@keyframes hero-stat-spread-d0 {
+  0%,
+  15% {
+    transform: translate3d(min(4.5cqw, 52px), min(2.2cqh, 32px), 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-stat-spread-d1 {
+  0%,
+  15% {
+    transform: translate3d(min(4cqw, 48px), calc(-1 * min(2.4cqh, 34px)), 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-stat-spread-d2 {
+  0%,
+  15% {
+    transform: translate3d(calc(-1 * min(4.5cqw, 52px)), min(2cqh, 30px), 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-stat-spread-d3 {
+  0%,
+  15% {
+    transform: translate3d(
+      calc(-1 * min(4cqw, 48px)),
+      calc(-1 * min(2.6cqh, 36px)),
+      0
+    );
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-stat-spread {
+  will-change: transform;
+}
+
+.hero-stat-spread.hero-stat-spread--d0 {
+  animation: hero-stat-spread-d0 1.12s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+.hero-stat-spread.hero-stat-spread--d1 {
+  animation: hero-stat-spread-d1 1.12s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
+}
+
+.hero-stat-spread.hero-stat-spread--d2 {
+  animation: hero-stat-spread-d2 1.12s cubic-bezier(0.22, 1, 0.36, 1) 0.36s both;
+}
+
+.hero-stat-spread.hero-stat-spread--d3 {
+  animation: hero-stat-spread-d3 1.12s cubic-bezier(0.22, 1, 0.36, 1) 0.44s both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .stat-card-float {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
+
+  .hero-stat-spread.hero-stat-spread--d0,
+  .hero-stat-spread.hero-stat-spread--d1,
+  .hero-stat-spread.hero-stat-spread--d2,
+  .hero-stat-spread.hero-stat-spread--d3 {
     animation: none;
     transform: none;
     will-change: auto;
@@ -127,8 +206,8 @@ body {
   }
   100% {
     transform: translate3d(
-        calc(-0.52 * 100cqw + min(23vw, 126px)),
-        calc(0.09 * 100cqh),
+        calc(-0.45 * 100cqw + min(20vw, 114px)),
+        calc(0.075 * 100cqh),
         0
       )
       rotate(-5.36deg)
@@ -143,8 +222,8 @@ body {
   }
   100% {
     transform: translate3d(
-        calc(0.52 * 100cqw - min(23vw, 126px)),
-        calc(0.07 * 100cqh),
+        calc(0.45 * 100cqw - min(20vw, 114px)),
+        calc(0.058 * 100cqh),
         0
       )
       rotate(5.69deg)
@@ -184,8 +263,8 @@ body {
 
   .hero-phone-spread--left {
     transform: translate3d(
-        calc(-0.52 * 100cqw + min(23vw, 126px)),
-        calc(0.09 * 100cqh),
+        calc(-0.45 * 100cqw + min(20vw, 114px)),
+        calc(0.075 * 100cqh),
         0
       )
       rotate(-5.36deg);
@@ -193,8 +272,8 @@ body {
 
   .hero-phone-spread--right {
     transform: translate3d(
-        calc(0.52 * 100cqw - min(23vw, 126px)),
-        calc(0.07 * 100cqh),
+        calc(0.45 * 100cqw - min(20vw, 114px)),
+        calc(0.058 * 100cqh),
         0
       )
       rotate(5.69deg);

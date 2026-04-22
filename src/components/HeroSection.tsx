@@ -2,6 +2,28 @@ import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import { hero } from '../figmaAssets'
 
+type HeroStatVariant = 'd0' | 'd1' | 'd2' | 'd3'
+
+function HeroStatFloater({
+  anchorClassName,
+  variant,
+  children,
+}: {
+  anchorClassName: string
+  variant: HeroStatVariant
+  children: ReactNode
+}) {
+  return (
+    <div
+      className={`hero-stat-spread hero-stat-spread--${variant} ${anchorClassName}`}
+    >
+      <div className={`stat-card-float stat-card-float--${variant} w-full`}>
+        {children}
+      </div>
+    </div>
+  )
+}
+
 /** Phrases after “into a …” — consonant-leading so “a” reads naturally */
 const HERO_ROTATING_PHRASES = [
   'Software company',
@@ -100,35 +122,6 @@ function PhoneShell({
 export function HeroSection() {
   return (
     <section className="relative w-full overflow-visible rounded-[32px] bg-gradient-to-r from-[#fee3ca] via-[#fef1e8] to-[#f4e1f1] px-4 pb-24 pt-10 sm:px-8 sm:pb-28 sm:pt-14 lg:min-h-[920px]">
-      <StatCard
-        iconBg="bg-[#d1fadf]"
-        iconSrc={hero.iconUser}
-        title="+42%"
-        subtitle="retention lift"
-        className="stat-card-float stat-card-float--d0 absolute left-[2%] top-[52%] z-30 hidden w-[180px] lg:left-[4%] lg:top-[48%] lg:flex"
-      />
-      <StatCard
-        iconBg="bg-[#fef0c7]"
-        iconSrc={hero.iconStar}
-        title="4.8"
-        subtitle="avg rating"
-        className="stat-card-float stat-card-float--d1 absolute left-[0%] top-[62%] z-30 hidden w-[180px] lg:flex"
-      />
-      <StatCard
-        iconBg="bg-[#d1fadf]"
-        iconSrc={hero.iconDownload}
-        title="12.4k"
-        subtitle="installs / agency"
-        className="stat-card-float stat-card-float--d2 absolute right-[2%] top-[56%] z-30 hidden w-[180px] lg:right-[4%] lg:flex"
-      />
-      <StatCard
-        iconBg="bg-[#fef0c7]"
-        iconSrc={hero.iconBolt}
-        title="18d"
-        subtitle="avg time-to-ship"
-        className="stat-card-float stat-card-float--d3 absolute bottom-[14%] right-[1%] z-30 hidden w-[180px] lg:flex"
-      />
-
       <div className="mx-auto flex max-w-[900px] flex-col items-center text-center">
         <div className="mb-8 flex items-center gap-3 rounded-full border border-black/[0.06] bg-white py-2.5 pl-4 pr-5 shadow-[0_2px_6px_rgba(0,0,0,0.05)]">
           <div className="h-6 w-14 shrink-0">
@@ -181,9 +174,58 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Phone cluster — shared center stack on load, then spread + tilt (see index.css). */}
-      <div className="relative mx-auto mt-12 w-full max-w-[900px] px-2 sm:mt-16">
-        <div className="hero-phone-cluster relative mx-auto h-[min(72vw,400px)] max-w-[800px] overflow-visible sm:h-[420px] lg:h-[460px]">
+      {/*
+        Composition matches Figma hero (node 70:1919): floaters + phones share one coordinate
+        system so chips sit in the corners of the mockup cluster, not % of the full section.
+      */}
+      <div className="hero-composition relative mx-auto mt-12 w-full max-w-[900px] px-2 pb-4 sm:mt-16 lg:min-h-[520px] lg:pb-6">
+        <HeroStatFloater
+          variant="d0"
+          anchorClassName="absolute left-[2%] top-[1%] z-[30] hidden w-[180px] lg:left-[4%] lg:top-[5%] lg:flex"
+        >
+          <StatCard
+            iconBg="bg-[#d1fadf]"
+            iconSrc={hero.iconUser}
+            title="+42%"
+            subtitle="retention lift"
+          />
+        </HeroStatFloater>
+        <HeroStatFloater
+          variant="d1"
+          anchorClassName="absolute left-[-3%] top-[34%] z-[30] hidden w-[180px] lg:left-[-2%] lg:top-[40%] lg:flex"
+        >
+          <StatCard
+            iconBg="bg-[#fef0c7]"
+            iconSrc={hero.iconStar}
+            title="4.8"
+            subtitle="avg rating"
+          />
+        </HeroStatFloater>
+        <HeroStatFloater
+          variant="d2"
+          anchorClassName="absolute right-[-1%] top-[8%] z-[30] hidden w-[180px] lg:right-[3%] lg:top-[12%] lg:flex"
+        >
+          <StatCard
+            iconBg="bg-[#d1fadf]"
+            iconSrc={hero.iconDownload}
+            title="12.4k"
+            subtitle="installs / agency"
+          />
+        </HeroStatFloater>
+        <HeroStatFloater
+          variant="d3"
+          anchorClassName="absolute bottom-[16%] right-[1%] z-[30] hidden w-[180px] lg:bottom-[22%] lg:right-[3%] lg:flex"
+        >
+          <StatCard
+            iconBg="bg-[#fef0c7]"
+            iconSrc={hero.iconBolt}
+            title="18d"
+            subtitle="avg time-to-ship"
+          />
+        </HeroStatFloater>
+
+        {/* Phones sit under floating stat cards (z-30). */}
+        <div className="hero-phone-cluster relative z-[10] mx-auto h-[min(72vw,400px)] w-full max-w-[800px] overflow-visible sm:h-[420px] lg:h-[460px]">
           <div className="absolute left-1/2 top-0 z-[1] w-[min(46vw,252px)] max-w-[252px] -translate-x-1/2">
             <div className="hero-phone-spread hero-phone-spread--center">
               <PhoneShell className="aspect-[252/546]">
