@@ -1,4 +1,8 @@
-/** Figma MCP asset URLs — valid ~7 days from export ([Figma design](https://www.figma.com/design/diNWzHEjKGdqdNiVApMxDm/Landing-Test?node-id=70-1919)). */
+/**
+ * Figma MCP asset URLs — valid ~7 days from export.
+ * Custom hero: [node 70:1919](https://www.figma.com/design/diNWzHEjKGdqdNiVApMxDm/Landing-Test?node-id=70-1919).
+ * Lead Connector tab hero: frame [92:4157](https://www.figma.com/design/diNWzHEjKGdqdNiVApMxDm/Landing-Test?node-id=92-4157) — phone UI rebuilt in `LcHeroPhoneMocks.tsx`; paste MCP image URLs there if you export rasters from that frame.
+ */
 export const hero = {
   homepage1:
     'https://www.figma.com/api/mcp/asset/b12e8a0d-6be1-4c8c-8e94-bb8ea2260492',
@@ -28,6 +32,24 @@ export const header = {
 export const why = {
   brandLogo:
     'https://www.figma.com/api/mcp/asset/b3641a3d-3f84-45a6-b3f3-be87e0482eb6',
+} as const
+
+/** Pricing page icons — frame [126:5043](https://www.figma.com/design/diNWzHEjKGdqdNiVApMxDm/Landing-Test?node-id=126-5043) */
+export const pricing = {
+  pillDot:
+    'https://www.figma.com/api/mcp/asset/c137de69-dd42-41ca-8858-c65012edefa5',
+  checkCircle:
+    'https://www.figma.com/api/mcp/asset/904b9fa6-886e-4b4d-aa19-ea9f18c506c9',
+  xCircle:
+    'https://www.figma.com/api/mcp/asset/9f7fc2a5-e67a-428e-814e-2930db1d8420',
+  starterChartA:
+    'https://www.figma.com/api/mcp/asset/23ed236c-ce92-42bc-b0ea-f80a96042892',
+  starterChartB:
+    'https://www.figma.com/api/mcp/asset/f6fd3101-5fc5-4e09-91b5-a7f1a00e75f9',
+  growthRocket:
+    'https://www.figma.com/api/mcp/asset/0d511cfa-41cb-4890-afa2-5f88beee6032',
+  scaleStar:
+    'https://www.figma.com/api/mcp/asset/f969992d-baa9-47ad-937c-fd252326f10f',
 } as const
 
 /** Primary nav (node 70:1920) — [Figma](https://www.figma.com/design/diNWzHEjKGdqdNiVApMxDm/Landing-Test?node-id=70-1919) */

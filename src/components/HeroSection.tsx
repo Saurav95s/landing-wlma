@@ -1,6 +1,12 @@
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import { hero } from '../figmaAssets'
+import type { ProductTabId } from '../productTab'
+import {
+  LcPhoneScreenCenter,
+  LcPhoneScreenLeft,
+  LcPhoneScreenRight,
+} from './LcHeroPhoneMocks'
 
 type HeroStatVariant = 'd0' | 'd1' | 'd2' | 'd3'
 
@@ -119,9 +125,27 @@ function PhoneShell({
   )
 }
 
-export function HeroSection() {
+const heroSectionGradient = {
+  custom:
+    'from-[#fee3ca] via-[#fef1e8] to-[#f4e1f1]',
+  /** HL BrandKit: Background Blue Tint + light nurture wash (Lead Connector frame 92:4157). */
+  lc: 'from-[#E7F3FE] via-[#f7fbff] to-[#FEF9E1]',
+} as const
+
+export function HeroSection({
+  productTab,
+  onOpenPricing,
+}: {
+  productTab: ProductTabId
+  onOpenPricing?: () => void
+}) {
+  const isLc = productTab === 'lc'
+  const gradient = isLc ? heroSectionGradient.lc : heroSectionGradient.custom
+
   return (
-    <section className="relative w-full overflow-visible rounded-[32px] bg-gradient-to-r from-[#fee3ca] via-[#fef1e8] to-[#f4e1f1] px-4 pb-24 pt-10 sm:px-8 sm:pb-28 sm:pt-14 lg:min-h-[920px]">
+    <section
+      className={`relative w-full overflow-visible rounded-[32px] bg-gradient-to-r ${gradient} px-4 pb-24 pt-10 sm:px-8 sm:pb-28 sm:pt-14 lg:min-h-[920px]`}
+    >
       <div className="mx-auto flex max-w-[900px] flex-col items-center text-center">
         <div className="mb-8 flex items-center gap-3 rounded-full border border-black/[0.06] bg-white py-2.5 pl-4 pr-5 shadow-[0_2px_6px_rgba(0,0,0,0.05)]">
           <div className="h-6 w-14 shrink-0">
@@ -132,26 +156,40 @@ export function HeroSection() {
             />
           </div>
           <p className="text-sm font-semibold text-[#151b2b]">
-            2,400+ agencies shipped an app last quarter
+            {isLc
+              ? 'The Lead Connector app agencies publish for every client workspace'
+              : '2,400+ agencies shipped an app last quarter'}
           </p>
         </div>
 
-        <h1 className="max-w-[900px] text-balance text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-[#10172a] sm:text-6xl sm:leading-[1.05] lg:text-[88px] lg:leading-[96px] lg:tracking-[-2.64px]">
-          <span className="block">Turn your agency</span>
-          <span className="mt-1 block lg:mt-2">
-            <span>into a </span>
-            <HeroRotatingPhrase />
-          </span>
-        </h1>
+        {isLc ? (
+          <h1 className="max-w-[900px] text-balance text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-[#07223D] sm:text-6xl sm:leading-[1.05] lg:text-[88px] lg:leading-[96px] lg:tracking-[-2.64px]">
+            <span className="block">Put Lead Connector</span>
+            <span className="mt-1 block lg:mt-2">
+              <span>in your clients’ </span>
+              <span className="text-[#2896FB]">pockets</span>
+            </span>
+          </h1>
+        ) : (
+          <h1 className="max-w-[900px] text-balance text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-[#10172a] sm:text-6xl sm:leading-[1.05] lg:text-[88px] lg:leading-[96px] lg:tracking-[-2.64px]">
+            <span className="block">Turn your agency</span>
+            <span className="mt-1 block lg:mt-2">
+              <span>into a </span>
+              <HeroRotatingPhrase />
+            </span>
+          </h1>
+        )}
 
         <p className="mt-6 max-w-[720px] text-pretty text-lg font-medium leading-7 text-[#596070]">
-          A fully-branded iOS & Android app your clients download from the App
-          Store — under your name, with your icon, running on HighLevel.
+          {isLc
+            ? 'Listings on the App Store and Google Play under your agency — conversations, pipeline, and calendars without exposing HighLevel branding to your clients’ end users.'
+            : 'A fully-branded iOS & Android app your clients download from the App Store — under your name, with your icon, running on HighLevel.'}
         </p>
 
         <div className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-center">
           <button
             type="button"
+            onClick={onOpenPricing}
             className="inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#10172a] pl-6 pr-2 text-base font-semibold text-white"
           >
             Plans starting from
@@ -175,103 +213,179 @@ export function HeroSection() {
       </div>
 
       {/*
-        Composition matches Figma hero (node 70:1919): floaters + phones share one coordinate
-        system so chips sit in the corners of the mockup cluster, not % of the full section.
+        Custom app composition: Figma hero (node 70:1919).
+        Lead Connector composition: Figma frame 92:4157 — in-phone UI in LcHeroPhoneMocks.tsx
+        (swap for MCP-exported rasters from that node if required).
       */}
       <div className="hero-composition relative mx-auto mt-12 w-full max-w-[900px] px-2 pb-4 sm:mt-16 lg:min-h-[520px] lg:pb-6">
-        <HeroStatFloater
-          variant="d0"
-          anchorClassName="absolute left-[2%] top-[1%] z-[30] hidden w-[180px] lg:left-[4%] lg:top-[5%] lg:flex"
-        >
-          <StatCard
-            iconBg="bg-[#d1fadf]"
-            iconSrc={hero.iconUser}
-            title="+42%"
-            subtitle="retention lift"
-          />
-        </HeroStatFloater>
-        <HeroStatFloater
-          variant="d1"
-          anchorClassName="absolute left-[-3%] top-[34%] z-[30] hidden w-[180px] lg:left-[-2%] lg:top-[40%] lg:flex"
-        >
-          <StatCard
-            iconBg="bg-[#fef0c7]"
-            iconSrc={hero.iconStar}
-            title="4.8"
-            subtitle="avg rating"
-          />
-        </HeroStatFloater>
-        <HeroStatFloater
-          variant="d2"
-          anchorClassName="absolute right-[-1%] top-[8%] z-[30] hidden w-[180px] lg:right-[3%] lg:top-[12%] lg:flex"
-        >
-          <StatCard
-            className="absolute top-[5px]"
-            iconBg="bg-[#d1fadf]"
-            iconSrc={hero.iconDownload}
-            title="12.4k"
-            subtitle="installs / agency"
-          />
-        </HeroStatFloater>
-        <HeroStatFloater
-          variant="d3"
-          anchorClassName="absolute bottom-[16%] right-[1%] z-[30] hidden w-[180px] lg:bottom-[22%] lg:right-[3%] lg:flex"
-        >
-          <StatCard
-            iconBg="bg-[#fef0c7]"
-            iconSrc={hero.iconBolt}
-            title="18d"
-            subtitle="avg time-to-ship"
-          />
-        </HeroStatFloater>
+        {isLc ? (
+          <>
+            <HeroStatFloater
+              variant="d0"
+              anchorClassName="absolute left-[2%] top-[1%] z-[30] hidden w-[180px] lg:left-[4%] lg:top-[5%] lg:flex"
+            >
+              <StatCard
+                iconBg="bg-[#d1fadf]"
+                iconSrc={hero.iconUser}
+                title="+38%"
+                subtitle="faster replies"
+              />
+            </HeroStatFloater>
+            <HeroStatFloater
+              variant="d1"
+              anchorClassName="absolute left-[-3%] top-[34%] z-[30] hidden w-[180px] lg:left-[-2%] lg:top-[40%] lg:flex"
+            >
+              <StatCard
+                iconBg="bg-[#fef0c7]"
+                iconSrc={hero.iconStar}
+                title="4.8"
+                subtitle="app rating"
+              />
+            </HeroStatFloater>
+            <HeroStatFloater
+              variant="d2"
+              anchorClassName="absolute right-[-1%] top-[8%] z-[30] hidden w-[180px] lg:right-[3%] lg:top-[12%] lg:flex"
+            >
+              <StatCard
+                className="absolute top-[5px]"
+                iconBg="bg-[#d1fadf]"
+                iconSrc={hero.iconDownload}
+                title="9.1k"
+                subtitle="MAU / app"
+              />
+            </HeroStatFloater>
+            <HeroStatFloater
+              variant="d3"
+              anchorClassName="absolute bottom-[16%] right-[1%] z-[30] hidden w-[180px] lg:bottom-[22%] lg:right-[3%] lg:flex"
+            >
+              <StatCard
+                iconBg="bg-[#fef0c7]"
+                iconSrc={hero.iconBolt}
+                title="14d"
+                subtitle="median go-live"
+              />
+            </HeroStatFloater>
 
-        {/* Phones sit under floating stat cards (z-30). */}
-        <div className="hero-phone-cluster relative z-[10] mx-auto h-[min(72vw,400px)] w-full max-w-[800px] overflow-visible sm:h-[420px] lg:h-[460px]">
-          <div className="absolute left-1/2 top-0 z-[1] w-[min(46vw,252px)] max-w-[252px] -translate-x-1/2">
-            <div className="hero-phone-spread hero-phone-spread--center">
-              <PhoneShell className="aspect-[252/546]">
-                <img
-                  src={hero.homepage1}
-                  alt="App home"
-                  className="h-full w-full object-cover"
-                />
-              </PhoneShell>
-            </div>
-          </div>
-
-          <div className="absolute left-1/2 top-0 z-[2] w-[min(46vw,252px)] max-w-[252px] -translate-x-1/2">
-            <div className="hero-phone-spread hero-phone-spread--right">
-              <PhoneShell className="aspect-[252/546]">
-                <img
-                  src={hero.homepage2}
-                  alt="App dashboard"
-                  className="h-full w-full object-cover"
-                />
-              </PhoneShell>
-            </div>
-          </div>
-
-          <div className="absolute left-1/2 top-0 z-[3] w-[min(46vw,252px)] max-w-[252px] -translate-x-1/2">
-            <div className="hero-phone-spread hero-phone-spread--left">
-              <PhoneShell className="aspect-[252/546]">
-                <div className="relative flex h-full w-full flex-col items-center bg-[#fcddf8] pt-[28%]">
-                  <div className="relative w-[52%] max-w-[145px] aspect-square">
-                    <img
-                      src={hero.riverfrontLogo}
-                      alt=""
-                      className="size-full object-contain"
-                    />
-                  </div>
-                  <p className="mt-[10%] text-center font-[family-name:var(--font-display-serif)] text-[clamp(1rem,3.2vw,2.1rem)] italic leading-tight tracking-[-0.05em] text-[#441f95]">
-                    Riverfront
-                    <br />
-                    Spa & Hotels
-                  </p>
+            <div className="hero-phone-cluster relative z-[10] mx-auto h-[min(72vw,400px)] w-full max-w-[800px] overflow-visible sm:h-[420px] lg:h-[460px]">
+              <div className="absolute left-1/2 top-0 z-[1] w-[min(46vw,252px)] max-w-[252px] -translate-x-1/2">
+                <div className="hero-phone-spread hero-phone-spread--center">
+                  <PhoneShell className="aspect-[252/546]">
+                    <LcPhoneScreenCenter />
+                  </PhoneShell>
                 </div>
-              </PhoneShell>
+              </div>
+              <div className="absolute left-1/2 top-0 z-[2] w-[min(46vw,252px)] max-w-[252px] -translate-x-1/2">
+                <div className="hero-phone-spread hero-phone-spread--right">
+                  <PhoneShell className="aspect-[252/546]">
+                    <LcPhoneScreenRight />
+                  </PhoneShell>
+                </div>
+              </div>
+              <div className="absolute left-1/2 top-0 z-[3] w-[min(46vw,252px)] max-w-[252px] -translate-x-1/2">
+                <div className="hero-phone-spread hero-phone-spread--left">
+                  <PhoneShell className="aspect-[252/546]">
+                    <LcPhoneScreenLeft />
+                  </PhoneShell>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </>
+        ) : (
+          <>
+            <HeroStatFloater
+              variant="d0"
+              anchorClassName="absolute left-[2%] top-[1%] z-[30] hidden w-[180px] lg:left-[4%] lg:top-[5%] lg:flex"
+            >
+              <StatCard
+                iconBg="bg-[#d1fadf]"
+                iconSrc={hero.iconUser}
+                title="+42%"
+                subtitle="retention lift"
+              />
+            </HeroStatFloater>
+            <HeroStatFloater
+              variant="d1"
+              anchorClassName="absolute left-[-3%] top-[34%] z-[30] hidden w-[180px] lg:left-[-2%] lg:top-[40%] lg:flex"
+            >
+              <StatCard
+                iconBg="bg-[#fef0c7]"
+                iconSrc={hero.iconStar}
+                title="4.8"
+                subtitle="avg rating"
+              />
+            </HeroStatFloater>
+            <HeroStatFloater
+              variant="d2"
+              anchorClassName="absolute right-[-1%] top-[8%] z-[30] hidden w-[180px] lg:right-[3%] lg:top-[12%] lg:flex"
+            >
+              <StatCard
+                className="absolute top-[5px]"
+                iconBg="bg-[#d1fadf]"
+                iconSrc={hero.iconDownload}
+                title="12.4k"
+                subtitle="installs / agency"
+              />
+            </HeroStatFloater>
+            <HeroStatFloater
+              variant="d3"
+              anchorClassName="absolute bottom-[16%] right-[1%] z-[30] hidden w-[180px] lg:bottom-[22%] lg:right-[3%] lg:flex"
+            >
+              <StatCard
+                iconBg="bg-[#fef0c7]"
+                iconSrc={hero.iconBolt}
+                title="18d"
+                subtitle="avg time-to-ship"
+              />
+            </HeroStatFloater>
+
+            <div className="hero-phone-cluster relative z-[10] mx-auto h-[min(72vw,400px)] w-full max-w-[800px] overflow-visible sm:h-[420px] lg:h-[460px]">
+              <div className="absolute left-1/2 top-0 z-[1] w-[min(46vw,252px)] max-w-[252px] -translate-x-1/2">
+                <div className="hero-phone-spread hero-phone-spread--center">
+                  <PhoneShell className="aspect-[252/546]">
+                    <img
+                      src={hero.homepage1}
+                      alt="App home"
+                      className="h-full w-full object-cover"
+                    />
+                  </PhoneShell>
+                </div>
+              </div>
+
+              <div className="absolute left-1/2 top-0 z-[2] w-[min(46vw,252px)] max-w-[252px] -translate-x-1/2">
+                <div className="hero-phone-spread hero-phone-spread--right">
+                  <PhoneShell className="aspect-[252/546]">
+                    <img
+                      src={hero.homepage2}
+                      alt="App dashboard"
+                      className="h-full w-full object-cover"
+                    />
+                  </PhoneShell>
+                </div>
+              </div>
+
+              <div className="absolute left-1/2 top-0 z-[3] w-[min(46vw,252px)] max-w-[252px] -translate-x-1/2">
+                <div className="hero-phone-spread hero-phone-spread--left">
+                  <PhoneShell className="aspect-[252/546]">
+                    <div className="relative flex h-full w-full flex-col items-center bg-[#fcddf8] pt-[28%]">
+                      <div className="relative w-[52%] max-w-[145px] aspect-square">
+                        <img
+                          src={hero.riverfrontLogo}
+                          alt=""
+                          className="size-full object-contain"
+                        />
+                      </div>
+                      <p className="mt-[10%] text-center font-[family-name:var(--font-display-serif)] text-[clamp(1rem,3.2vw,2.1rem)] italic leading-tight tracking-[-0.05em] text-[#441f95]">
+                        Riverfront
+                        <br />
+                        Spa & Hotels
+                      </p>
+                    </div>
+                  </PhoneShell>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </section>
   )
